@@ -51,7 +51,7 @@ jobs:
         run:  docker build --tag testbot testbot
       -
         name: Run testbot
-        run:  docker run testbot localhost
+        run:  docker run testbot cuberite
       -
         name: Validate server logs
         run: |
