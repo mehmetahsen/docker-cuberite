@@ -12,7 +12,8 @@ on:
 
 jobs:
   cuberite-build:
-    runs-on: ubuntu-latest
+    name:     Build & Push Cuberite 
+    runs-on:  ubuntu-latest
     steps:
       -
         name: Checkout
@@ -33,7 +34,7 @@ jobs:
           push: true
           tags: ghcr.io/mehmetahsen/cuberite:${{ github.sha }}
   bottest:
-    name:     Check if a bot can join the game and say hi
+    name:     Test with a bot
     runs-on:  ubuntu-latest
     needs:    cuberite-build
     services:
