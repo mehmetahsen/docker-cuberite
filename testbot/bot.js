@@ -1,6 +1,6 @@
 const mineflayer = require('mineflayer')
 
-if (process.argv.length < 4 || process.argv.length > 6) {
+if (process.argv.length < 3 || process.argv.length > 6) {
   console.log('Usage : node jumper.js <host> [<port>] [<name>] [<password>]')
   process.exit(1)
 }
@@ -17,4 +17,10 @@ bot.once('spawn', () => {
   bot.chat(bot.spawnPoint.toString())
   bot.chat('Servus!')
   bot.quit()
+  process.exit(0)
+})
+
+bot.on('error', (err) => {
+  console.log(err)
+  process.exit(2)
 })
