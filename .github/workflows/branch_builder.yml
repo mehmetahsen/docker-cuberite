@@ -40,6 +40,8 @@ jobs:
     services:
       cuberite:
         image:  ghcr.io/mehmetahsen/cuberite-docker:${{ github.sha }}
+        ports:
+          - 25565:25565
     steps:
       -
         name: Checkout
@@ -51,7 +53,7 @@ jobs:
         run:  docker build --tag testbot testbot
       -
         name: Run testbot
-        run:  docker run --network ${{ job.services.cuberite.network }} testbot cuberite
+        run:  docker run --network host testbot
       -
         name: Validate server logs
         run: |
