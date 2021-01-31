@@ -58,6 +58,7 @@ jobs:
       -
         name: Validate server logs
         run: |
+          echo "::debug:: `docker logs ${{ job.services.cuberite.id }}`"
           docker logs ${{ job.services.cuberite.id }} | grep --fixed-strings 'testbot has joined'
           docker logs ${{ job.services.cuberite.id }} | grep --fixed-strings 'Servus!'
           docker logs ${{ job.services.cuberite.id }} | grep --fixed-strings 'testbot has left'
