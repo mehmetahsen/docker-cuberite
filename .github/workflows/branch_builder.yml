@@ -36,7 +36,7 @@ jobs:
           curl --retry 6  --retry-connrefused \
             --retry-delay 5 --retry-max-time 60 \
             --connect-timeout 5 --max-time 10 \
-            --insecure --silent --head --output /dev/null https://localhost:8080
+            --insecure https://localhost:8080
           echo "::debug:: `docker logs cuberite`"
       - name: Run testbot
         run:  docker run --network mine testbot cuberite;
