@@ -42,6 +42,8 @@ jobs:
         image:  ghcr.io/mehmetahsen/cuberite-docker:${{ github.sha }}
         ports:
           - 25565:25565
+        options:
+          tty: true
     steps:
       -
         name: Checkout
