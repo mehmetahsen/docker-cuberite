@@ -24,7 +24,7 @@ jobs:
       - name: Docker build testbot
         run:  docker build --tag testbot testbot
       - name: Docker network create mine
-        run: docker create network mine
+        run: docker network create mine
       - name: Run cuberite
         run: |
           docker run --network mine --network-alias cuberite \
