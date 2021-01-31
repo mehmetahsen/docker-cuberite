@@ -43,7 +43,7 @@ jobs:
         ports:
           - 25565:25565
         options:
-          tty: true
+          - tty: true
     steps:
       -
         name: Checkout
