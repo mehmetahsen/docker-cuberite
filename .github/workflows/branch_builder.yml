@@ -33,7 +33,7 @@ jobs:
             --tty --detach -p 25565:25565 -p 8080:8080 \
             cuberite
           echo "Wait for cuberite to be ready..."
-          docker run curlimages/curl --retry 6  --retry-all-errors \
+          docker run --network mine curlimages/curl --retry 6  --retry-all-errors \
             --retry-delay 10 --retry-max-time 60 \
             --connect-timeout 5 --max-time 10 \
             --insecure https://localhost:8080 || docker logs cuberite; exit 1
