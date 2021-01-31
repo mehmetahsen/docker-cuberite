@@ -11,57 +11,31 @@ on:
       - 'env.sh'
 
 jobs:
-  cuberite-build:
-    name:     Build & Push Cuberite 
-    runs-on:  ubuntu-latest
-    steps:
-      -
-        name: Checkout
-        uses: actions/checkout@v2
-        with:
-          ref:  ${{ github.ref }}
-      -
-        name: Login to GitHub Container Registry
-        uses: docker/login-action@v1 
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GP_PAT }}
-      -
-        name: Build and push
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          tags: ghcr.io/mehmetahsen/cuberite-docker:${{ github.sha }}
   bottest:
     name:     Test with a bot
     runs-on:  ubuntu-latest
-    needs:    cuberite-build
-    services:
-      cuberite:
-        image:  ghcr.io/mehmetahsen/cuberite-docker:${{ github.sha }}
-        env:
-          CREATE_SETTINGS_INI: 1
-          AUTHENTICATION_AUTHENTICATE: 0
-        ports:
-          - 25565:25565
-        options: '--tty'
     steps:
-      -
-        name: Checkout
+      - name: Checkout
         uses: actions/checkout@v2
         with:
           ref:  ${{ github.ref }}
-      -
-        name: Docker build testbot
+      - name: Docker build cuberite
+        run: docker build --tag cuberite .
+      - name: Docker build testbot
         run:  docker build --tag testbot testbot
-      -
-        name: Run testbot
-        run:  docker run --network host testbot
-      -
-        name: Validate server logs
+      - name: Docker create network mine
+        run: docker create network mine
+      - name: Run cuberite
         run: |
-          echo "::debug:: `docker logs ${{ job.services.cuberite.id }}`"
+          docker run --network mine --network-alias cuberite \
+            -e CREATE_SETTINGS_INI=1
+            -e AUTHENTICATION_AUTHENTICATE=0
+            --tty --detach
+      - name: Run testbot
+        run:  docker run --network mine testbot cuberite
+      - name: Validate server logs
+        run: |
+          echo "::debug:: `docker logs cuberite"
           docker logs ${{ job.services.cuberite.id }} | grep --fixed-strings 'testbot has joined'
           docker logs ${{ job.services.cuberite.id }} | grep --fixed-strings 'Servus!'
           docker logs ${{ job.services.cuberite.id }} | grep --fixed-strings 'testbot has left'
