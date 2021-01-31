@@ -27,7 +27,7 @@ jobs:
         run: docker network create mine
       - name: Run cuberite
         run: |
-          docker run --network mine --network-alias cuberite \
+          docker run --name cuberite --network mine \
             -e CREATE_SETTINGS_INI=1
             -e AUTHENTICATION_AUTHENTICATE=0
             --tty --detach
@@ -36,6 +36,6 @@ jobs:
       - name: Validate server logs
         run: |
           echo "::debug:: `docker logs cuberite"
-          docker logs ${{ job.services.cuberite.id }} | grep --fixed-strings 'testbot has joined'
-          docker logs ${{ job.services.cuberite.id }} | grep --fixed-strings 'Servus!'
-          docker logs ${{ job.services.cuberite.id }} | grep --fixed-strings 'testbot has left'
+          docker logs cuberite | grep --fixed-strings 'testbot has joined'
+          docker logs cuberite | grep --fixed-strings 'Servus!'
+          docker logs cuberite | grep --fixed-strings 'testbot has left'
