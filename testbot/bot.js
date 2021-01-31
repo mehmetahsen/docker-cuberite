@@ -1,14 +1,15 @@
 const mineflayer = require('mineflayer')
 
 if (process.argv.length < 3 || process.argv.length > 6) {
-  console.log('Usage : node jumper.js <host> [<port>] [<name>] [<password>]')
+  console.log('Usage : node bot.js [<host>] [<port>] [<username>] [<password>]')
+  console.log('Defaults :      host=localhost port=25565  username=testbot')
   process.exit(1)
 }
 
 const bot = mineflayer.createBot({
-  host: process.argv[2] ? process.argv[2] : 'localhost',
-  port: process.argv[3] ? parseInt(process.argv[3]) : 25565,
-  username: process.argv[4] ? process.argv[4] : 'testbot',
+  host:     process.argv[2] ? process.argv[2]           : 'localhost',
+  port:     process.argv[3] ? parseInt(process.argv[3]) : 25565,
+  username: process.argv[4] ? process.argv[4]           : 'testbot',
   password: process.argv[5]
 })
 
