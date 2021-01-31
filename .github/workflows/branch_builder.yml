@@ -32,11 +32,12 @@ jobs:
             -e AUTHENTICATION_AUTHENTICATE=0 \
             --tty --detach -p 25565:25565 \
             cuberite
+          sleep 20
+          echo "::debug:: `docker logs cuberite`"
       - name: Run testbot
-        run:  docker run --network mine testbot cuberite
+        run:  docker run --network mine testbot cuberite;
       - name: Validate server logs
         run: |
-          echo "::debug:: `docker logs cuberite"
           docker logs cuberite | grep --fixed-strings 'testbot has joined'
           docker logs cuberite | grep --fixed-strings 'Servus!'
           docker logs cuberite | grep --fixed-strings 'testbot has left'
