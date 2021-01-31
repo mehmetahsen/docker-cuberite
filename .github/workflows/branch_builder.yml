@@ -30,7 +30,7 @@ jobs:
           docker run --name cuberite --network mine \
             -e CREATE_SETTINGS_INI=1
             -e AUTHENTICATION_AUTHENTICATE=0
-            --tty --detach
+            --tty --detach cuberite
       - name: Run testbot
         run:  docker run --network mine testbot cuberite
       - name: Validate server logs
