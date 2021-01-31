@@ -1,6 +1,6 @@
 const mineflayer = require('mineflayer')
 
-if (process.argv.length < 3 || process.argv.length > 6) {
+if (process.argv.length < 2 || process.argv.length > 6) {
   console.log('Usage : node bot.js [<host>] [<port>] [<username>] [<password>]')
   console.log('Defaults :      host=localhost port=25565  username=testbot')
   process.exit(1)
