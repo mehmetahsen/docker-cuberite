@@ -36,7 +36,8 @@ jobs:
           docker run --network mine curlimages/curl --retry 6  --retry-all-errors \
             --retry-delay 10 --retry-max-time 60 \
             --connect-timeout 5 --max-time 10 \
-            --insecure https://cuberite:8080 || docker logs cuberite; exit 1
+            --insecure https://cuberite:8080 ; \ 
+            if [ $? -gt 0 ]; then docker logs cuberite; exit 1; fi
       - name: Run testbot
         run:  docker run --network mine testbot cuberite;
       - name: Validate server logs
