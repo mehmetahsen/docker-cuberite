@@ -33,11 +33,14 @@ jobs:
             --tty --detach -p 25565:25565 -p 8080:8080 \
             cuberite
           echo "Wait for cuberite to be ready..."
-          docker run --network mine curlimages/curl --retry 6  --retry-all-errors \
+          if ! `docker run --network mine curlimages/curl --retry 1  --retry-all-errors \
             --retry-delay 10 --retry-max-time 60 \
             --connect-timeout 5 --max-time 10 \
-            --insecure https://cuberite:8081 ; 
-            if [ $? -gt 0 ]; then docker logs cuberite; exit 1; fi
+            --insecure https://cuberite:8080`
+          then
+            docker logs cuberite;
+            exit 1
+          fi
       - name: Run testbot
         run:  docker run --network mine testbot cuberite;
       - name: Validate server logs
