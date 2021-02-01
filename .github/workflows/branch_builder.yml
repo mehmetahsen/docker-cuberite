@@ -34,11 +34,11 @@ jobs:
             cuberite
           echo "Wait for cuberite to be ready..."
           if ! `docker run --network mine curlimages/curl --retry 1  --retry-all-errors \
-            --retry-delay 10 --retry-max-time 60 \
+            --retry-delay 1 --retry-max-time 60 \
             --connect-timeout 5 --max-time 10 \
-            --insecure https://cuberite:8080`
-          then
-            docker logs cuberite;
+            --insecure https://cuberite:8080`;
+          then;
+            docker logs cuberite
             exit 1
           fi
       - name: Run testbot
